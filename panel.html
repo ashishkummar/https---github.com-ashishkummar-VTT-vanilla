@@ -1,0 +1,730 @@
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+   
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+
+    <script src="js/jquery-3.4.1.js"></script>
+    <script src="lib/ace/ace.js"></script>
+    <script src="lib/beautify.min.js"></script>
+    <script src="lib/FileSaver.js"></script>
+  
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<style>
+
+
+ 
+    #editor { 
+        /*position: absolute;*/
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+    }
+ 
+
+
+.divclass1 {
+   width:auto;
+   height:10em;
+   font-size:12px;	
+}
+
+   
+ .text-ctaNorm {
+    background-color: rgb(255, 255, 255);
+    color: rgb(0, 0, 255);
+  }
+
+  .text-intNorm {
+    background-color: rgb(255, 255, 255);
+    color: rgb(7, 165, 21);
+  }
+
+  .text-intDyna {
+    background-color: rgb(255, 255, 255);
+    color: rgb(180, 16, 117);
+    font-family: 'Open Sans Condensed', sans-serif;
+     
+  }
+
+  .text-intchecked {
+    background-color: rgb(23, 147, 8, 1);
+    color: rgb(255, 255, 255);
+    transition: 500ms;
+    -webkit-transition: 500ms;
+  }
+  
+  .text-ctachecked {
+    background-color: rgb(0, 0, 255);
+    color: rgb(255, 255, 255);
+    transition: 500ms;
+    -webkit-transition: 500ms;
+  }
+
+
+  .text-liteColor{
+
+    background-color: rgb(255, 0, 0, 1);
+    color: rgb(255, 255, 255);
+    transition: 500ms;
+    -webkit-transition: 500ms;
+
+
+  }
+.alertMsgDconf{
+  color: rgb(41, 1, 1);
+  font-size: 10px;
+  
+}
+
+  .text-ctaETcompared {
+    background-color: rgb(0, 0, 255);
+    color: rgb(255, 255, 255);
+    transition: 200ms;
+    -webkit-transition: 2000ms;
+     
+  }
+
+  .text-intETcompared {
+    background-color: rgb(23, 147, 8, 1);
+    color: rgb(255, 255, 255);
+    transition: 200ms;
+    -webkit-transition: 300ms;
+     
+  }
+
+.scrollbar::-webkit-scrollbar {
+    background-color:#fff;
+    width:16px
+}
+
+/* background of the scrollbar except button or resizer */
+
+.scrollbar::-webkit-scrollbar-track {
+    background-color:#fff
+}
+.scrollbar::-webkit-scrollbar-track:hover {
+    background-color:#f4f4f4
+}
+
+/* scrollbar itself */
+.scrollbar::-webkit-scrollbar-thumb {
+    background-color:#babac0;
+    border-radius:16px;
+	height:30px;
+    border:5px solid #fff
+}
+.scrollbar::-webkit-scrollbar-thumb:hover {
+    background-color:#a0a0a5;
+    border:4px solid #f4f4f4
+}
+
+/* set button(top and bottom of the scrollbar) */
+.scrollbar::-webkit-scrollbar-button {display:none}
+ 
+ .text-line {
+        background-color: transparent;
+        padding:10px;
+		border:none;
+		text-align: center;
+		width:35px;
+		border-bottom:1px solid black;
+        padding: 2px 2px;
+		color: #cc33ff;
+		font-weight:bold;
+		'border-radius: 25px;
+    }
+
+/*  inp txt fld */
+ 
+ .switch {
+  position: relative;
+  display: inline-block;
+  width: 32px;
+  height: 18px;
+}
+
+.switch input { 
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 18px;
+  width: 18px;
+  left: 0px;
+  bottom: 0px;
+  background-color: white;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+input:checked + .slider {
+  background-color: #2196F3;
+}
+
+input:focus + .slider {
+  box-shadow: 0 0 1px #2196F3;
+}
+
+input:checked + .slider:before {
+  -webkit-transform: translateX(13px);
+  -ms-transform: translateX(13px);
+  transform: translateX(13px);
+}
+
+/* Rounded sliders */
+.slider.round {
+  border-radius: 20px;
+}
+
+.slider.round:before {
+  border-radius: 50%;
+}
+ /* end slider switch*/
+  
+ .navbar-toggler-icon 
+   {
+    width: 1.2em;
+    height: 1.2em;
+}
+
+  
+.blink_me {
+  animation: blinker 1s linear infinite;
+}
+
+@keyframes blinker {
+  50% {
+    opacity: 0.5;
+  }
+}
+
+.marquee{   
+  letter-spacing: 2px;
+	font-weight: 600;
+  font-size:11px;
+  color:darkred;
+  margin-top: -4px;
+  margin-left: 39px;
+ 
+    
+}
+
+@keyframes shake {
+  0% { transform: translate(1px, 1px) rotate(0deg); }
+  10% { transform: translate(-1px, -2px) rotate(-1deg); }
+  20% { transform: translate(-3px, 0px) rotate(1deg); }
+  30% { transform: translate(3px, 2px) rotate(0deg); }
+  40% { transform: translate(1px, -1px) rotate(1deg); }
+  50% { transform: translate(-1px, 2px) rotate(-1deg); }
+  60% { transform: translate(-3px, 1px) rotate(0deg); }
+  70% { transform: translate(3px, 1px) rotate(-1deg); }
+  80% { transform: translate(-1px, -1px) rotate(1deg); }
+  90% { transform: translate(1px, 2px) rotate(0deg); }
+  100% { transform: translate(1px, -2px) rotate(-1deg); }
+}
+
+
+
+</style>
+<link rel="stylesheet" type="text/css" href="css/style.css">
+    <title>VDX Tester Tool by VDX.TV </title>
+  </head>
+
+
+
+<body>
+<!-- 
+  https://www.w3schools.com/bootstrap4/tryit.asp?filename=trybs_navbar_collapse
+  http://creative.exponential.com/creative/Demo/2020/Q2/mail/final/v1/index.html
+ -->
+  <!-- Image and text -->
+
+<nav class="navbar navbar-light  bg-light">
+  <a id="toolIconLink" class="navbar-brand text-secondary" >
+    <img src="images/img16.png" width="30" height="30" class="d-inline-block align-top" id='toolIcon' alt="">
+   
+  
+    <span  >VDX TesterTool 6.0.6   
+      <span   id="newVerScrolltxt"></span>
+    </span> 
+     
+
+  </a>
+  
+  <img id="alarmIcon" style="display:none;cursor: pointer;  animation: shake 1s; " src = "images/alarm.svg" alt="Click here to know more"/>
+
+
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    
+    <div class="collapse navbar-collapse" id="collapsibleNavbar">
+      <ul class="navbar-nav">
+        <!--
+        <li class="nav-item">
+          <a class="nav-link" href="#">Advance Mode </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Developer Mode</a>
+        </li>  -->
+        
+        
+       
+        <li class="nav-item">
+          <a  class="nav-link" href=" http://creative.exponential.com/creative/Demo/2020/Q2/mail/final/v1/index.html" target="_blank">Quality Checklist</a>
+        </li> 
+
+        <li class="nav-item">
+          <a  class="nav-link .bg-info"  style="cursor: pointer; display: none; color: blue;"  id="specificQcMenu" target="_blank" data-toggle="modal" data-target="#model2">Specific QC</a>
+        </li> 
+        
+        <li class="nav-item">
+          <a  class="nav-link " href="https://bit.ly/32KYesr" target="_blank">Bugs•Issues•Suggestions etc.</a>
+        </li>    
+		
+		 <li class="nav-item">
+          <a  class="nav-link " href="https://creative.exponential.com/creative/devshowcase/VTT/help/" target="_blank">Help Document</a>
+        </li> 
+      
+       
+
+      </ul>
+    </div>
+  </nav>
+
+
+
+<!-- body -->
+
+    
+
+ 
+<div class="divclass1 card " style="height: 93px;">
+<p class=" card-header text-danger font-weight-bold"><b> <i class="fas fa-tachometer-alt"></i>  Video Quartile Pixels </b>    </p>
+  <div id="txt1" style="overflow: auto;" class="card-body scrollbar text-danger font-weight-bold "></div>
+</div>
+  
+
+
+
+ 
+<div class="divclass1 card" style="">
+<p class="card-header text-info font-weight-bold">
+<b><i class="fas fa-user-tie"></i> Impression Pixels (intLive) </b>  
+    <span id="span1" class="badge badge-pill badge-info" style="cursor: pointer;" data-toggle="modal" data-target="#model1"></span>  
+    <img id="clearPixels" style="cursor:pointer" width="13px" src="images/clear.png"/> </p>  
+    <div id="txt3" style="overflow: auto;" class="card-body scrollbar text-info font-weight-bold"></div>
+</div>
+
+
+<div class="divclass1 card" style="" >
+<p class="card-header text-primary font-weight-bold">
+<b><i class="fas fa-globe-americas"></i> ClickTag Pixels (clickLive) </b> 
+<span id="span2" class="badge badge-pill badge-primary" style="cursor: pointer;" data-toggle="modal" data-target="#model1"></span> &nbsp;<img id="clearCTAPixels" style="cursor:pointer" width="13px" src="images/clear.png"/>
+
+
+</p>
+  <div id="txt4" style="overflow: auto;" class="card-body scrollbar text-primary font-weight-bold"></div>
+</div>
+ 
+
+ <div class="divclass1 card" style="">
+<p class="card-header  text-secondary font-weight-bold "><b> <i class="fas fa-file-image"></i>   Image File Size > <input   class='text-line' type="text" id="fsizeTXT" value="10" name="fname"> KB</b>&nbsp;<img id="clearImgSize" style="cursor:pointer" width="13px" src="images/clear.png"/>&nbsp;&nbsp;<i style="cursor:pointer; "  title="Explore More" class="fas fa-external-link-alt" data-toggle="modal" data-target="#model3" ></i></p>
+  <div id="txt2" style="overflow: auto;" class="card-body scrollbar text-secondary font-weight-normal"></div>
+  
+</div>
+
+ 
+ <div style="overflow: auto;" class="divclass1 card" style="" >
+<p class="card-header text-dark font-weight-bold">
+<b> <i class="fas fa-file-video"></i> Video File Size and Duration </b> &nbsp;<img title='Re-check video size' id="recheckIcon" style="cursor:pointer; display:none" width="13px" src="images/reset.png"/>   
+
+ &nbsp;
+   
+<label class="switch">
+  <input type="checkbox" checked id="switch1">
+  <span class="slider round"> </span> 
+</label>
+
+</p>
+  <div style="overflow: auto;" id="txt5" class="card-body scrollbar text-secondary font-weight-normal"> 
+  <!--
+  <div style="overflow: hidden; pointer-events:none" class="loader10"></div>
+  -->
+  </div>
+</div>
+<!-- end video file size--> 
+
+<div>
+  <!-- hiding cpu usage and loadedFilesInfo will make it display:inline later--> 
+  <div style="padding-left: 10px; padding-top: 5px; font-size:11px;  display: none;" id="cpuUse"></div>
+  <!-- <div style="padding-left: 10px; padding-top: 5px; font-size:11px;  display: block;" id="chromeVer">...</div>-->
+  <div style=" font-size:12px;  display: none;" id="loadedFilesInfo" data-toggle="modal" data-target="#model3" ></div> 
+  <div style="padding-left: 10px; padding-top: 5px; font-size:12px;  display: inline;" id="bottomInfoTxt1"></div> 
+  <div style=" font-size:12px;  display: inline;" id="etIdinfo"></div>
+  <div style=" font-size:12px;  display: inline;" id="otherInfo"></div>
+  
+
+  </div>
+
+
+ 
+ <!-- Button trigger modal
+<span     data-toggle="modal" data-target="#model1"> Launch demo modal</span>
+ -->
+<!-- Modal 1 -->
+<div class="modal fade" style="width: 90%; left: 5%;" id="model1" tabindex="-1" role="dialog" aria-labelledby="exampleModalScrollableTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h6 class="modal-title" id="model1" ><b>All clickLive and intLive Pixels</b></h6>
+        <button type="button" id='model1close' class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div  id="ctaGrid" class="modal-body scrollbar" style="text-align: center; font-size: 12px; min-height: 400px;"></div>
+      <div  id="compWithET"   class="modal-body scrollbar" style="text-align: center; font-size: 11px; min-height: 400px;"></div>
+     
+      
+      <div class="modal-footer justify-content-between">
+        <span id="alertMsgDconfig" class="alertMsgDconf"></span> 
+        <div class="input-group input-group-sm mb-3">
+          <input type="text" size="6" maxlength="6" class="form-control" id='ETpixTXT'  placeholder="Enter ET ID" aria-label="Enter ExpoTask ID" aria-describedby="basic-addon2">
+         
+          <div class="input-group-append">
+            <button class="btn btn-outline-info btn-sm"  id='compareETpix' type="button">
+              <!--
+              <span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
+              -->
+              <span class="d-none spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
+              Compare with ExpoTask </button>
+            </div>
+            </div>
+  
+              <div class="btn-group ">
+                <div class="btn-group dropup justify-content-between" role="group">
+                  <button type="button" id='dapiQButton' class="btn   dropdown-toggle dropdown-toggle-split btn-outline-primary btn-sm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                    <!-- <i class="fa fa-list" aria-hidden="true"></i>-->
+                    <i class="fa fa-check" aria-hidden="true"></i>
+
+                  </button>
+
+                  <div class="dropdown-menu" style="padding: 8px;">
+                    <!-- Dropdown menu links -->
+                    <div id='dapiQCresult' style="width:229px; height:350px;overflow:auto; word-break:break-all; font-size: 11px;" >... </div> 
+                    
+                    
+                  </div>
+                </div> 
+                <button type="button" data-toggle="modal" data-target="#model4"  id="downloadDCon" class="btn btn-outline-primary btn-sm">
+                  &nbsp;&nbsp; View/Edit 'designer-config.js' &nbsp;   
+                </button>
+                 
+              </div>
+ 
+           
+ 
+      </div>
+    </div>
+  </div>
+</div>
+<!-- END OF MODEL 1 -->
+
+<!-- MODEL 2 / campaign specific Q C Box -->
+
+<div class="modal fade " style="width: 95%; left: 5%;" id="model2" tabindex="-1" role="dialog" aria-labelledby="exampleModalScrollableTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h6 class="modal-title "   id="model2" ><b>Specific QC</b></h6>
+        <button type="button" id='model2close' class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div  id="campaignSpecificWalmart" class="modal-body scrollbar">
+      
+      <!-- body  of campaign Specific of walmart  -->
+      <div style="text-align: left; color: #7f7f7f; font-size: 15px; padding:3px;">   <b> Store Locator - </b>  </div>
+
+      <div class="custom-control custom-switch">
+        <input type="checkbox" class="custom-control-input"  id="campSpeciSwitch1">
+        <label class="custom-control-label" for="campSpeciSwitch1"></label>
+        <span  id='btnNodata' type='button'> verify 'no_data.jpg'</span>
+      </div> 
+      
+  
+
+
+      <div class="custom-control custom-switch">
+        <input type="checkbox" class="custom-control-input" disabled  id="campSpeciSwitch2">
+        <label class="custom-control-label" for="campSpeciSwitch2"></label>
+        <span  id='btnMapDef' type='button'>verify 'map_default.jpg'</span>
+      </div> 
+         
+      <br>
+      <div style="text-align: left; color: #7f7f7f; font-size: 15px; padding:3px;">   <b>Product Info -</b>  <br> 
+        <snap id='prodJsonDownIco' style="cursor:pointer;" >  <img title="Live product.json file"    style=" vertical-align:top; margin-top: 7px;" src="images/jsonFile.png" width="20px"></img></snap> | 
+        
+        <a href='http://creative.exponential.com/creative/devshowcase/VTT/camspec/mazawal/prodJSON.zip'  target="_blank">
+        <img title="Save modified product.json file"  style=" vertical-align:top; margin-top: 7px;" src="images/jsonFile-hard.png" width="20px"></img></a>
+
+     
+      
+      </div>
+ 
+
+      <div class="input-group mb-3">
+        <input type="text" id='pJosnTxt' class="form-control" placeholder="Localhost path of product.json" aria-label="Localhost path of product.json" aria-describedby="basic-addon2">
+        <div class="input-group-append">
+          <button class="btn btn-outline-secondary" id='rollbackCHKbtn' type="button">
+            <!--
+            <span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
+            -->
+            <span class="d-none spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
+            
+            Check</button>
+        </div>
+      </div>
+
+<br>
+      
+    </div>
+
+     <!-- body  of campaign Specific of mazda  -->
+     
+     <div  id="campaignSpecificMazda" class="modal-body scrollbar">
+     
+     <div class="custom-control custom-switch">
+       <input type="checkbox" class="custom-control-input"  id="no_offers_CTASwitch">
+       <label class="custom-control-label" for="no_offers_CTASwitch"></label>
+       <span  id='btnNoOffers'  > Verify 'No Offers'</span>
+     </div> 
+
+     <div class="custom-control custom-switch">
+      <input type="checkbox" class="custom-control-input"  id="no_feed_CTASwitch">
+      <label class="custom-control-label" for="no_feed_CTASwitch"></label>
+      <span  id='btnNoOffers'  > Verify 'No Feed'</span>
+    </div> 
+      
+
+     <br>
+    </div>
+
+      <!---
+      <button class="btn btn-outline-info btn-sm"  id='btnNodata' type="button"> Verify no_data.jpg  </button><br>
+      <button class="btn btn-outline-info btn-sm"  id='btnMapDef' type="button"> Verify map_default.jpg  </button>
+      --->
+     <!-- /body     -->
+
+      <div class="modal-footer">
+        <div class="input-group input-group-sm mb-3">
+          <!--   
+          <button class="btn btn-outline-info btn-sm"  id='compareETpix' type="button">
+              
+             Close  </button>
+            
+              -->
+             
+          </div>          
+ 
+      </div>
+    </div>
+  </div>
+</div> 
+<!-- end of MODEL 2 -->
+ 
+
+
+
+ <!-- Start of Model 3 -----------------------------------> 
+
+
+ 
+ <!--
+<span  data-toggle="modal" data-target="#model3"> File Size Information </span>
+  -->
+
+<div class="modal fade" style="width: 90%; left: 5%;" id="model3" tabindex="-1" role="dialog" aria-labelledby="exampleModalScrollableTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h6 class="modal-title" id="model3" ><b> File Size Information</b></h6>
+        <button type="button" id='model1close' class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+     <!-- body-->
+     
+
+     <table class="table" style=" font-size: 11px;" >
+       
+      <tbody>
+      
+      
+        
+        <tr>
+          <th scope="row" width="73px">
+            <p><span id="jpgTotal"></span></p> 
+            <p><span id="pngTotal"></span></p>
+            <p><span id="svgTotal"></span></p>
+            <p><span id="gifTotal"></span></p>
+
+          </th>
+          <td>
+            <div id="allImageList" class="modal-body scrollbar" style=" max-width: 248px; max-height: 360px;"></div> 
+          </td>
+        </tr>
+
+        <tr>
+          <th scope="row"><span id="fontTotal"></span></th>
+          <td><div id="fontList" class="modal-body scrollbar" style=" max-width: 248px; max-height: 150px;"></div> 
+          </td>
+        </tr>
+         
+ 
+
+        
+
+      </tbody>
+    </table>
+     
+     <!--
+       <div  id="ctaGrid" class="modal-body scrollbar" style="text-align: center; font-size: 12px; min-height: 400px;">s</div>
+     <div  id="compWithET"   class="modal-body scrollbar" style="text-align: center; font-size: 11px; min-height: 400px;">s</div>
+    
+     -->
+
+      <!--/body-->
+
+     <!--footer-->  
+      <div class="modal-footer justify-content-between">
+        <div class="input-group input-group-sm mb-3">
+           
+        <div id='totalFileSize'> </div> 
+          
+            </div>
+       </div>
+    </div>
+  </div>
+</div>
+  
+
+<!--  end of Model 3----------------------------------------> 
+
+<!-- Start of Model 4 -----------------------------------> 
+
+
+ 
+ <!--
+<span  data-toggle="modal" data-target="#model3"> File Size Information </span>
+  -->
+
+  <div class="modal fade" style="width: 100%; left: 0%;" id="model4" tabindex="-1" role="dialog" aria-labelledby="exampleModalScrollableTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document"   style="max-width:100%;">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h6 class="modal-title" id="model4" > <span id="penicon" style="display: none;"><i class="fas fa-pen-nib"></i></span> <b> View / Edit Designer Config</b></h6> &nbsp; <i style="cursor:pointer; font-size:11px;" data-toggle="tooltip" data-placement="top" title="Open designer-config.js separately" class="far fa-share-square" id="openCodeinTab"></i>
+          <button type="button" id='model3close' class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+       <!-- body of ACE model -->      
+       <div id="editor" style=" min-height: 465px;">
+        // loading designer-config.. 
+       </div>
+  
+        <!--/body-->
+  
+       <!--footer-->  
+        <div class="modal-footer justify-content-between">
+          <div class="input-group input-group-sm mb-3">
+             
+            <button type="button" id="refreshEditor" class="btn btn-success  btn-sm">
+              Refresh Ad Unit </button> &nbsp; 
+              <button type="button" data-toggle="tooltip" data-placement="top" title="Beautify code" style="display: none;" id="beautifyEditor" class="btn btn-outline-secondary btn-sm">
+                Beautify</button> 
+                 
+                <button type="button" data-toggle="tooltip" data-placement="top" id="wrapEditor" title="Wrap/Unwrap code" class="btn btn-outline-warning btn-sm">
+                  <i class="fas fa-text-width"></i></button> 
+                  &nbsp;
+                <button type="button" data-toggle="tooltip" data-placement="top" title="Reset code to original" id="resetContentEditor" class="btn btn-outline-danger btn-sm">
+                  <i class="fas fa-retweet"></i></button> 
+                  &nbsp;
+                  <button type="button" data-toggle="tooltip" data-placement="top" title="Save code to local"  id="saveCodeEditor" class="btn btn-outline-info btn-sm">
+                    <i class="fas fa-file-download"></i></button> 
+
+                    
+                  
+
+              </div>
+         </div>
+      </div>
+    </div>
+  </div>
+    
+  
+  <!--  end of Model 4 (Ace Editor)----------------------------------------> 
+
+<!-- ---------------------------------------------->
+ 
+ 
+
+<script src="js/popper.min.js"  crossorigin="anonymous"></script>
+<script src="js/bootstrap.min.js"  crossorigin="anonymous"></script>
+<script src="js/panel.js"  crossorigin="anonymous"></script>
+ 
+	
+	<!-- scroll
+	
+	
+	-->
+	 
+	  <!--  Preloading required product libs test -->
+    <!--
+  <script src="https://creative.exponential.com/creative/devshowcase/VTT/instream/10.9.0-2/creative.js"></script>
+    <script src="https://creative.exponential.com/creative/devshowcase/VTT/instream/10.8.0-1/creative.js"></script>
+	  <script src="https://creative.exponential.com/creative/devshowcase/VTT/instream/10.6.2-0/creative.js"></script>
+-->
+<!--  END OF Preloading required product libs -->
+ 
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+ 
+ <!-- Global site tag (gtag.js) - Google Analytics -->
+
+ <!-- Default Statcounter code for vtt
+https://creative.exponential.com/ -->
+
+  
+  <!-- End of Statcounter Code -->
+ 
+
+  </body>
+</html> 

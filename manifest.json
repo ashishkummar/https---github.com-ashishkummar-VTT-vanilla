@@ -1,0 +1,80 @@
+{
+	"name": "VDX Testing Tool",	
+	"version": "6.0.6",
+	"description": "Build for VDX.TV",
+	"manifest_version": 2,
+	
+	"background": {
+		"scripts": [
+		    "js/es6-promise.auto.min.js",
+			"js/defaults.js",
+			"js/speech.js",
+			"js/document.js",
+			"js/events.js",
+			"js/bg.js",
+			"js/listen.js",
+			"js/jquery-3.4.1.js"
+		],
+		"persistent": true
+	},
+	"devtools_page": "devtools.html",
+	
+	
+	"browser_action":{
+    "default_popup":"popup.html",
+    "default_icon":"images/img16.png"
+},
+	
+ "web_accessible_resources": [   
+    "html/htmlFileName.html",
+    "styles/*",
+    "fonts/*"
+],
+	 
+	
+	"permissions": [
+        
+        "http://*.tribalfusion.com/",
+		"https://*.tribalfusion.com/",
+		"http://*.exponential.com/",
+		"https://*.exponential.com/",
+		"https://www.google-analytics.com/",
+		"https://creative.vdx.tv/",
+		"https://use.typekit.net/",
+		"storage", 		 
+        "tabs",
+        "history",
+		"notifications",
+        "webRequest",
+        "webRequestBlocking",
+		"contextMenus",
+		"system.cpu"  
+    ],
+	
+ 
+	 
+	 
+	"content_security_policy": "script-src 'self' https://cdnx-mock.tribalfusion.com  https://www.statcounter.com/counter/counter.js https://ssl.google-analytics.com/ga.js https://www.google-analytics.com https://creative.exponential.com https://code.jquery.com https://expotask-api.exponential.com; object-src 'self'",
+	 
+
+	"icons": {
+		"16": "images/img16.png",
+		"32": "images/img32.png",
+		"48": "images/img48.png",
+		"128": "images/img128.png"
+	},
+
+	"options_page": "options.html",
+	
+	"content_scripts": [
+  {
+    "matches": [
+      "<all_urls>"
+    ],
+   
+   "js": ["js/jquery-3.4.1.js", "js/content.js"]
+   	
+	
+  }
+]
+}

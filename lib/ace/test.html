@@ -1,0 +1,50 @@
+
+    
+<script src="ace.js" type="text/javascript" charset="utf-8"></script>
+
+<style type="text/css" media="screen">
+    #editor { 
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+    }
+</style>
+ 
+ 
+<div id="editor">
+  
+  function foo(items) {
+    var x = "All this is syntax highlighted";
+    return x;
+}</div>
+
+<script>
+   var editor = ace.edit("editor");
+    editor.setTheme("ace/theme/monokai");
+    editor.session.setMode("ace/mode/javascript");
+    editor.setShowPrintMargin(false);
+
+ editor.on("change", updateSaveButtons);
+
+ function updateSaveButtons(edited) {
+   console.log(' updateSaveButtons ')
+   /*    
+   if (edited) {
+            ui.fileSaveAndCloseBtn.css("color", "#ff0000");
+            ui.fileSaveBtn.css("color", "#ff0000");
+        } else {
+            ui.fileSaveAndCloseBtn.css("color", "#000000");
+            ui.fileSaveBtn.css("color", "#000000");
+        }
+       */ 
+    }
+
+
+</script>
+
+
+ 
+<br><br><br><br><br><br> 
+<h3>https://ace.c9.io/#nav=api&api=search </h3>

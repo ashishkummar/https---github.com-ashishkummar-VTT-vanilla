@@ -1,0 +1,11 @@
+
+in creative.js return has been added like below to prevent the unit exit, on click of CTA
+
+find  -  var t="video1"
+
+replace - return;var t="video1"
+
+
+ftp- /mnt/svmdev01expocreativeapp/websites/webapps/exponential/creative/devshowcase/VTT/instream
+
+
